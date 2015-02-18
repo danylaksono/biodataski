@@ -1,0 +1,78 @@
+<!DOCTYPE HTML>
+<html>
+ <head>
+    <meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="./bootstrap.min.css">
+	<link rel="shortcut icon" href="favicon.ico"/>
+    <script src="jquery-2.1.1.min.js"></script> 
+    <title>Tabel Rekapitulasi Alumni SKI</title>
+	<style>
+	.navbar .navbar-brand { 
+		max-height: 4px;
+		max-width: 3%; 
+		overflow: visible;
+		padding-top: 0;
+		padding-bottom: 0; 
+	}
+	</style>
+</head>
+<body>
+	<script> 
+	function importGSS(json){
+    var tr;
+	for(var i = 0; i < json.feed.entry.length; i++){
+        var entry = json.feed.entry[i];
+			tr = $('<tr/>');
+			tr.append("<td>" + entry.gsx$nama.$t + "</td>");
+			tr.append("<td>" + entry.gsx$panggilan.$t + "</td>");
+			tr.append("<td>" + entry.gsx$jeniskelamin.$t + "</td>");
+			tr.append("<td>" + entry.gsx$nomorkontak.$t + "</td>");
+			tr.append("<td>" + entry.gsx$domisili.$t + "</td>");
+			tr.append("<td>" + entry.gsx$alamatlengkap.$t + "</td>");
+			tr.append("<td>" + entry.gsx$angkatandigeodesi.$t + "</td>");
+			tr.append("<td>" + entry.gsx$kontaklain.$t + "</td>");
+			tr.append("<td>" + entry.gsx$keteranganlain.$t + "</td>");
+			$('table').append(tr);
+		}
+	}
+	</script>
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <a class="navbar-brand" href="#"> 
+			<img alt="Brand" src="logo-ugm.png" width="45px" height="45px" padding-top="25"/>
+		  </a>
+		</div>
+		<div class="navbar-header">
+		  <p class="navbar-text" > Form Biodata SKI Teknik Geodesi UGM</p>
+		</div>  
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="./Peta.html">Peta</a></li>
+		</ul>
+	  </div>
+	</nav>
+	
+	<div class="container">	
+	<div class="table-responsive ">          
+		<table class="table table-bordered table-hover">
+		<thead>
+		<tr>
+			<th>Nama Lengkap</th>
+			<th>Panggilan</th>
+			<th>Jenis Kelamin</th>
+			<th>Kontak/HP</th>
+			<th>Domisili</th>
+			<th>Alamat</th>
+			<th>Angkatan</th>
+			<th>Kontak Lain</th>
+			<th>Keterangan</th>
+		</tr>
+		</thead>
+	</table>
+
+	<script src="https://spreadsheets.google.com/feeds/list/1LdP5KC-_u7e7ZMVI9ZUXcePRozhaOPPGeQMLrgg0SOE/1/public/values?alt=json-in-script&amp;callback=importGSS"></script>
+    <script src="./bootstrap.min.js"/>
+</body>
+</html>
+</html>

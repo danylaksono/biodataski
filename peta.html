@@ -1,0 +1,173 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+ <head>
+    <meta charset="utf-8" />
+    <title>Peta Persebaran Alumni SKI</title>
+	<script src="jquery-2.1.1.min.js"></script> 
+	<script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+	<link rel="shortcut icon" href="favicon.ico"/>
+	<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
+	<link rel="stylesheet" href="dist/MarkerCluster.css" />
+	<link rel="stylesheet" href="dist/MarkerCluster.Default.css" />
+	<link rel="stylesheet" href="./bootstrap.min.css">
+	
+	<script src="./dist/leaflet.markercluster-src.js"></script>
+	<style>
+	html, body, #map {
+        height: 100%;
+	}
+	.map {
+		background-color:#fff;
+		background-size: cover;
+		position: absolute;
+		-webkit-background-size: cover;
+		-moz-background-size: cover;
+		display: block;
+		padding-top: 20px;
+		padding-bottom: 5px;
+	}
+	
+	.olControlAttribution {
+		bottom:5px;
+	}	
+	.olControlMousePosition {
+		padding-bottom:50px;
+		left:5px;
+	}
+	.olControlZoom {
+		z-index:0;
+	}
+	
+	.navbar .navbar-brand { 
+    max-height: 4px;
+    max-width: 3%; 
+    overflow: visible;
+    padding-top: 0;
+    padding-bottom: 0; 
+	}
+	
+	.navbar {
+	margin-bottom: 0 !important;
+	}
+
+	</style>
+	
+</head>
+<body onload=initialize()>
+	<nav class="navbar navbar-inverse">
+	  <div class="container-fluid">
+		<div class="navbar-header">
+		  <a class="navbar-brand" href="#"> 
+			<img alt="Brand" src="logo-ugm.png" width="45px" height="45px" padding-top="25"/>
+		  </a>
+		</div>
+		<div class="navbar-header">
+		  <p class="navbar-text" > Form Biodata SKI Teknik Geodesi UGM</p>
+		</div>  
+		<ul class="nav navbar-nav navbar-right">
+			<li><a href="./rekapitulasi.html">Rekap Data</a></li>
+		</ul>
+	  </div>
+	</nav>
+	<div id="map"></div>
+	
+	
+	
+	<script> 
+	
+	GeoObject = {};   // Global var to store all data
+	
+	 
+	// Record function
+	function addRecords(idAsAString, records) {
+	  if (GeoObject[idAsAString] === undefined) {
+		GeoObject[idAsAString] = records;
+	  } else {
+		for (var i in records) {
+		  GeoObject[idAsAString][i] = records[i];
+		}
+	  }
+	}
+	
+	// function import gss
+	function importGSS(json){
+		counter = 1;
+		for(var i = 0; i < json.feed.entry.length; i++){
+			var entry = json.feed.entry[i];
+				addRecords(counter.toString(), {
+					nama: entry.gsx$nama.$t,
+					panggilan: entry.gsx$panggilan.$t,
+					jeniskel: entry.gsx$jeniskelamin.$t,
+					nohp: entry.gsx$nomorkontak.$t, 
+					domisili: entry.gsx$domisili.$t, 
+					alamat: entry.gsx$alamatlengkap.$t, 
+					angkatan: entry.gsx$angkatandigeodesi.$t,
+					kontak: entry.gsx$kontaklain.$t,
+					ket: entry.gsx$keteranganlain.$t				
+					});
+				geocode(GeoObject, counter);
+				counter++;
+				
+		}
+	}
+	
+	// Geocode using nominatim
+	function geocode(data, counter) {
+		bla = data[counter].domisili.replace(/\"/g, "");
+		script = document.createElement('script');
+		script.src = "http://nominatim.openstreetmap.org/search?format=json&json_callback=geocoderesult&limit=1&featuretype=city&q=" + bla;
+		document.body.appendChild(script);
+	}
+	
+	// Callback Function of Geocode
+	var num = 1;
+	function geocoderesult(gcodejson) {
+		//console.log(gcodejson[0].display_name);
+		addRecords(num.toString(), { 
+			nama_kota: gcodejson[0].display_name, 
+			bujur: gcodejson[0].lon,
+			lintang: gcodejson[0].lat
+		});
+	num++;
+	} 
+	
+	</script>
+	<script> //initialize 
+	function initialize (){
+	
+	
+
+	var map = L.map('map').setView([0, 125], 3);
+		L.tileLayer('https://{s}.tiles.mapbox.com/v3/{id}/{z}/{x}/{y}.png', {
+			maxZoom: 18,
+			attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors, ' +
+				'<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
+				'Imagery © <a href="http://mapbox.com">Mapbox</a>',
+			id: 'examples.map-i875mjb7'
+		}).addTo(map);
+		
+	var markers = new L.markerClusterGroup();
+
+	for (var key in GeoObject) {
+		//console.log(key, GeoObject[key]);  //to debug
+		var latk	= GeoObject[key].lintang;
+		var longk	= GeoObject[key].bujur;
+		var titlek	= GeoObject[key].panggilan + '\r\n (Angkatan ' + GeoObject[key].angkatan + ')';
+		var marker = L.marker(new L.LatLng(latk, longk), { title: "titel" });
+		marker.bindPopup(titlek);
+		markers.addLayer(marker);
+		}
+		
+	map.addLayer(markers); 
+
+	}
+	</script> 
+	<script src="https://spreadsheets.google.com/feeds/list/1LdP5KC-_u7e7ZMVI9ZUXcePRozhaOPPGeQMLrgg0SOE/1/public/values?alt=json-in-script&amp;callback=importGSS"></script>	
+	<script src="./bootstrap.min.js"/>
+
+
+	
+	
+</body>
+</html>
+</html>

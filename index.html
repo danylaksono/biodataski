@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Form Biodata SKI Teknik Geodesi UGM</title>
+	<link rel="stylesheet" href="./bootstrap.min.css">
+	<link rel="shortcut icon" href="favicon.ico"/>
+</head>
+
+<body>
+    <style>
+    .navbar .navbar-brand { 
+    max-height: 4px;
+    max-width: 3%; 
+    overflow: visible;
+    padding-top: 0;
+    padding-bottom: 0; 
+	}
+	
+	.center_div {
+    margin: 0 auto;
+    width:60%
+    }
+    </style>
+
+<nav class="navbar navbar-inverse">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="#"> 
+        <img alt="Brand" src="logo-ugm.png" width="45px" height="45px" padding-top="25"/>
+      </a>
+    </div>
+	<div class="navbar-header">
+      <p class="navbar-text" > Form Biodata SKI Teknik Geodesi UGM</p>
+	</div>  
+	<ul class="nav navbar-nav navbar-right">
+        <li><a href="./rekapitulasi.html">Rekap Data</a></li>
+        <li><a href="./peta.html">Peta</a></li>
+	</ul>
+  </div>
+</nav>
+	
+	
+<div class="container">
+
+	<!-- if submitted -->
+	<script>var submitted=false;</script>
+	<iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" onload="if(submitted)
+		{window.location=&#39;rekapitulasi.html&#39;;}"></iframe>
+	
+	<!-- main form -->
+	<div class="jumbotron">
+		<h2> Form Biodata </h2>
+		<p> Formulir isian biodata untuk alumni SKI Teknik Geodesi UGM sepanjang masa. Isikan hanya satu nama kota pada kolom domisili </p>
+	</div>
+	
+	<div class="well">
+	<form action="https://docs.google.com/forms/d/1XH19E0mg_qYr3aM7wCo9gb2PiTrS2lsYRsTPwSiT0do/formResponse" method="POST" role="form" target="hidden_iframe" onsubmit="submitted=true;">
+		<fieldset>
+	
+		<div class="row">
+			<div class="col-md-6">
+				
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="control-label" for="entry_1269448750">Nama Lengkap</label>  
+				  <input id="entry_1269448750" name="entry.1269448750" type="text" placeholder="Nama Lengkap" class="form-control input-md" aria-required="true">
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="control-label" for="entry_321197036">Nama Panggilan</label>  
+				  <input id="entry_321197036" name="entry.321197036" type="text" placeholder="Nama Panggilan" class="form-control input-md">
+				</div>
+
+				<!-- Select Basic -->
+				<div class="form-group">
+				  <label class="control-label" for="entry_903808327">Jenis Kelamin</label>
+				  <select id="entry_903808327" name="entry.903808327" class="form-control">
+					  <option value="Laki-Laki">Laki-laki</option>
+					  <option value="Perempuan">Perempuan</option>
+					</select>
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="control-label" for="entry_1648080894">Nomor Kontak</label>  
+				  <input id="entry_1648080894" name="entry.1648080894" type="tel" placeholder="No. HP" class="form-control input-md">
+				</div>
+
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="control-label" for="entry_1669821492">Angkatan</label>  
+				  <input id="entry_1669821492" name="entry.1669821492" type="text" placeholder="Angkatan di Geodesi" class="form-control input-md">
+				</div>
+			</div>
+			<div class="col-md-6">
+		
+				<!-- Text input-->
+				<div class="form-group">
+				  <label class="control-label" for="entry_1355484491">Domisili (kota tinggal)</label>  
+				  <input id="entry_1355484491" name="entry.1355484491" type="text" placeholder="Kota tempat tinggal saat ini" class="form-control input-md">
+				</div>
+
+				<!-- Textarea -->
+				<div class="form-group">
+				  <label class="control-label" for="entry_2120723141">Alamat Lengkap</label>
+					<textarea class="form-control" id="entry_2120723141" name="entry.2120723141" placeholder="Alamat Lengkap"></textarea>
+				</div>
+
+				<!-- Textarea -->
+				<div class="form-group">
+				  <label class="control-label" for="entry_1573823554">Kontak Lain</label>
+					<textarea class="form-control" id="entry_1573823554" name="entry.1573823554" placeholder="Facebook, Twitter, dll"></textarea>
+				</div>
+
+				<!-- Textarea -->
+				<div class="form-group">
+				  <label class="control-label" for="entry_474698072">Keterangan Tambahan</label>
+					<textarea class="form-control" id="entry_474698072" name="entry.474698072" placeholder="Nama pasangan, jumlah anak, dll"></textarea>
+				</div>
+
+				<!-- Button -->
+				<div class="form-group">
+					<input class="btn btn-primary center-block" type="submit" name="submit" value="Kirim data" id="ss-submit">  
+				</div>
+			</div>
+		</div>
+
+		</fieldset>
+	</form>
+	</div> 
+	</div> <!-- row -->
+
+</div> 
+</div>
+
+
+<script src="./jquery-2.1.1.min.js"/>
+<script src="./bootstrap.min.js"/>
+</body>
+</html>
+
+	
